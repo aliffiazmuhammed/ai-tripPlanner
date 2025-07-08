@@ -1,6 +1,27 @@
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
+import React, { useState } from "react";
+import axios from "axios";
 export function FormEnquiry() {
+
+  const [formData, setFormData] = useState({
+    destination: "",
+    days: "",
+    budget: "",
+    interests: "",
+    groupType: "",
+  });
+
+  const [generating, setgenerating] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+    console.log(formData)
+  }
+
   return (
     <div className="flex justify-center px-4 py-8 bg-blue-100 rounded-2xl ">
       <div className="flex flex-col gap-6 bg-white rounded-2xl shadow-lg w-full sm:w-[500px] md:w-[600px] lg:w-[700px] xl:w-[600px] p-6">
@@ -10,7 +31,7 @@ export function FormEnquiry() {
           </h1>
         </div>
         <div className="enquiryform">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               {/* Destination */}
               <div className="grid gap-2">
@@ -22,8 +43,10 @@ export function FormEnquiry() {
                 </label>
                 <input
                   id="destination"
+                  name="destination"
                   type="text"
                   placeholder="enter where you have to go....."
+                  onChange={handleChange}
                   required
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
@@ -42,6 +65,8 @@ export function FormEnquiry() {
                 <input
                   id="ndays"
                   type="number"
+                  name="days"
+                  onChange={handleChange}
                   required
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
@@ -58,7 +83,10 @@ export function FormEnquiry() {
                 </div>
                 <input
                   id="budget"
+                  name="budget"
                   type="number"
+                  onChange={handleChange}
+                  placeholder="in inr"
                   required
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
@@ -75,7 +103,9 @@ export function FormEnquiry() {
                 <input
                   id="tinterest"
                   type="text"
+                  name="interests"
                   placeholder="e.g., history, food, adventure"
+                  onChange={handleChange}
                   required
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
@@ -91,8 +121,10 @@ export function FormEnquiry() {
                 </label>
                 <input
                   id="gtype"
+                  name="groupType"
                   type="text"
                   placeholder="solo, couple, family,freinds"
+                  onChange={handleChange}
                   required
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
