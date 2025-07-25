@@ -25,7 +25,7 @@ export function FormEnquiry() {
 
    try {
      const response = await axios.post(
-       "http://localhost:3000/ai/get-response",
+       "https://ai-trip-planner-8hw3.vercel.app/ai/get-response",
        formData
      );
 
