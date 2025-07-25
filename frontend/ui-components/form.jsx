@@ -1,6 +1,8 @@
 
 import React, { useState } from "react";
 import axios from "axios";
+import { pdf } from "@react-pdf/renderer";
+import ItineraryPDF from "../pdfGenerator/ItineraryPDF";
 export function FormEnquiry() {
 
   const [formData, setFormData] = useState({
@@ -17,10 +19,37 @@ export function FormEnquiry() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e)=>{
-    e.preventDefault();
-    console.log(formData)
-  }
+ const handleSubmit = async (e) => {
+   e.preventDefault();
+   setgenerating(true);
+
+   try {
+     const response = await axios.post(
+       "http://localhost:3000/ai/get-response",
+       formData
+     );
+
+     const itineraryData = response.data;
+
+     // Generate PDF blob
+     const blob = await pdf(<ItineraryPDF data={itineraryData} />).toBlob();
+
+     // Create a download link
+     const url = URL.createObjectURL(blob);
+     const link = document.createElement("a");
+     link.href = url;
+     link.download = "travel-itinerary.pdf";
+     link.click();
+
+     // Cleanup
+     URL.revokeObjectURL(url);
+   } catch (error) {
+     console.error("Error generating itinerary:", error);
+   } finally {
+     setgenerating(false);
+   }
+ };
+
 
   return (
     <div className="flex justify-center px-4 py-8 bg-blue-100 rounded-2xl ">
@@ -133,9 +162,14 @@ export function FormEnquiry() {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="mt-4 w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
+                disabled={generating}
+                className={`mt-4 w-full py-2 text-white rounded-lg transition duration-300 ${
+                  generating
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-blue-600 hover:bg-blue-700"
+                }`}
               >
-                Generate
+                {generating ? "Generating..." : "Generate"}
               </button>
             </div>
           </form>

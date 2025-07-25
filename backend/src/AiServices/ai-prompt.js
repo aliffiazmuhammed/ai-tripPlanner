@@ -9,7 +9,7 @@ Please generate a **detailed travel itinerary** for a group of ${groupType}, bas
 - Destination: ${destination}
 - Number of Days: ${days}
 - Budget: ₹${budget} (Indian Rupees)
-- Interests: ${interests.join(", ")}
+- Interests: ${interests}
 - Group Type: ${groupType}
 
 ## Your Output Must Include:
@@ -19,8 +19,8 @@ Please generate a **detailed travel itinerary** for a group of ${groupType}, bas
    - Short description (2–3 lines) summarizing vibe, theme, and budget usage
 
 2. **Weather & Travel Advisory**
-   - What kind of weather to expect this month
-   - Packing tips, risks (e.g., landslides), seasonal highlights
+   - Current weather Status
+   - Packing tips, risks (e.g., landslides), seasonal highlights according to current weather
 
 3. **Day-by-Day Plan**
 For each day, include:
@@ -121,7 +121,7 @@ give the output in this json schema:
   }
 }
 
-dont include anything else
+dont include anything else it should be like a json file
   `;
 };
 

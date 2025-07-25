@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        <%= trip.trip_title %>
+    </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            color: #333;
+        }
+
+        h1,
+        h2 {
+            color: #2e8b57;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .day-box {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .note {
+            font-style: italic;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>
+        <%= trip.trip_title %>
+    </h1>
+    <p><strong>Duration:</strong>
+        <%= trip.duration_days %> Days |
+            <strong>Budget/Person:</strong> ₹<%= trip.budget_per_person %>
+    </p>
+    <p><strong>Season:</strong>
+        <%= trip.season %> |
+            <strong>Group Type:</strong>
+            <%= trip.group_type %>
+    </p>
+
+    <!-- Highlights -->
+    <div class="section">
+        <h2>Highlights</h2>
+        <ul>
+            <% trip.highlights.forEach(item=> { %>
+                <li>
+                    <%= item %>
+                </li>
+                <% }) %>
+        </ul>
+    </div>
+
+    <!-- Itinerary -->
+    <div class="section">
+        <h2>Day-by-Day Itinerary</h2>
+        <% trip.day_by_day_itinerary.forEach(day=> { %>
+            <div class="day-box">
+                <div class="title">
+                    <%= day.title %>
+                </div>
+                <ul>
+                    <% day.activities.forEach(activity=> { %>
+                        <li>
+                            <%= activity %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <p><strong>Stay:</strong>
+                    <%= day.stay_recommendations.join(", ") %></p>
+                <p><strong>Food:</strong> <%= day.food_spots.join(" , ") %></p>
+                <p class=" note">
+                        <%= day.pro_tip %>
+                </p>
+            </div>
+            <% }) %>
+    </div>
+
+    <!-- Budget -->
+    <div class="section">
+        <h2>Budget Breakdown</h2>
+        <ul>
+            <% for (let key in trip.budget_breakdown) { %>
+                <li>
+                    <%= key.replace(/_/g, " " ) %>: ₹<%= trip.budget_breakdown[key] %>
+                </li>
+                <% } %>
+        </ul>
+    </div>
+
+    <!-- Transport Tips -->
+    <div class="section">
+        <h2>Transport Tips</h2>
+        <ul>
+            <% trip.local_transport.tips.forEach(tip=> { %>
+                <li>
+                    <%= tip %>
+                </li>
+                <% }) %>
+        </ul>
+    </div>
+
+    <p class="note">For full safety & cultural tips, visit the official site or contact your host.</p>
+</body>
+
+</html>
