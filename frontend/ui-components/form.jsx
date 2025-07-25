@@ -161,16 +161,14 @@ export function FormEnquiry() {
 
               {/* Submit Button */}
               <button
-                type="submit"
-                disabled={generating}
-                className={`mt-4 w-full py-2 text-white rounded-lg transition duration-300 ${
-                  generating
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-blue-600 hover:bg-blue-700"
-                }`}
-              >
-                {generating ? "Generating..." : "Generate"}
-              </button>
+  type="submit"
+  disabled={generating}
+  className={`mt-4 w-full py-2 text-white rounded-lg transition duration-300 ${
+    generating ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+  }`}
+>
+  {generating ? "Generating... (this may take a few minutes)" : "Generate"}
+</button>
             </div>
           </form>
         </div>
